@@ -30,12 +30,13 @@ class ServiceApi {
 class Service {
 	public static function main() {
 		final egi = new Remote<EgiApi>(new NodeClient(), new RemoteEndpoint(new Host('...', 443)));
+		final port = 8080;
 
 		tink.tcp.Connection.tryEstablish({
 			host: '127.0.0.1',
 			port: 4003,
 		}).next(function( accsrv ) {
-			final container = new NodeContainer(8080);
+			final container = new NodeContainer(port);
 			final router = new Router<ServiceApi>(new ServiceApi(egi, accsrv));
 			container.run(req -> router
 				.route(Context.ofRequest(req))
@@ -48,6 +49,6 @@ class Service {
 			case Failure(err):
 		});
 
-		trace('listening on $port');
+		trace('listening on :$port');
 	}
 }
