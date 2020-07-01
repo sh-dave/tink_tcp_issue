@@ -1,0 +1,9 @@
+-D analyzer-optimize
+-dce full
+
+-lib tink_json
+-lib tink_tcp
+-lib tink_web
+
+-cp src
+-main Service
